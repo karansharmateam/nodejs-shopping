@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  shopping-app:
+    build: .
+    ports:
+      - "808:3000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017/shop
+    networks:
+      - shopping-network
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    networks:
+      - shopping-network
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  shopping-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
